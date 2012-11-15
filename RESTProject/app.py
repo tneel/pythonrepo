@@ -1,8 +1,10 @@
 # http://publish.luisrei.com/articles/flaskrest.html
 
-
 from flask import Flask, url_for, request, json, jsonify
 app = Flask(__name__)
+
+# ----------Basic--------------------------------
+#curl http://127.0.0.1:5000/
 
 @app.route('/')
 def api_root():
@@ -17,6 +19,7 @@ def api_article(articleid):
     return 'You are reading ' + articleid
 
 # ----------Args (Hello)--------------------------------
+#curl http://127.0.0.1:5000/hello?name=Thierry
 @app.route('/hello')
 def api_hello():
     if 'name' in request.args:
@@ -24,7 +27,8 @@ def api_hello():
     else:
         return 'Hello John Doe'
     
-    
+# to see the headers
+#curl -i http://127.0.0.1:5000/helloJSON    
 @app.route('/helloJSON', methods = ['GET'])
 def api_helloJSON():
     data = {
@@ -41,6 +45,7 @@ def api_helloJSON():
     return resp
 
 # ----------Echo-----------------------------------
+#curl -X GET http://127.0.0.1:5000/echo
 @app.route('/echo', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def api_echo():
     if request.method == 'GET':
@@ -59,7 +64,7 @@ def api_echo():
         return "ECHO: DELETE"
 
 # ----------Using request headers-----------------------------------
-
+#curl -H "Content-type: application/json" -X POST http://127.0.0.1:5000/messages -d '{"message":"Hello Data"}'
 @app.route('/messages', methods = ['POST'])
 def api_message():
 
@@ -76,6 +81,8 @@ def api_message():
         return "415 Unsupported Media Type ;)"
 
 # ----------With error handler-----------------------------------
+#curl http://127.0.0.1:5000/users/1
+#curl http://127.0.0.1:5000/users/10
 @app.errorhandler(404)
 def not_found(error=None):
     message = {

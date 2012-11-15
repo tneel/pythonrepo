@@ -1,3 +1,5 @@
+# http://publish.luisrei.com/articles/flaskrest.html
+#curl -v -u "admin:secret" http://127.0.0.1:5000/secrets
 
 from functools import wraps
 from flask import Flask, request, jsonify
